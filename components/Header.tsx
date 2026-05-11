@@ -7,8 +7,8 @@ import { site } from "@/lib/site";
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-3" aria-label="JMT Shipping home">
-      <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-navy text-lg font-black text-white shadow-lg shadow-navy/20">
+    <Link href="/" className="group flex items-center gap-3" aria-label="JMT Shipping home">
+      <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-ocean text-lg font-black text-white shadow-lg shadow-navy/20 transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
         JMT
       </span>
       <span className="hidden leading-tight sm:block">
@@ -25,18 +25,18 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/30 bg-white/90 px-5 py-4 shadow-sm backdrop-blur-xl lg:px-8">
+      <header className="sticky top-0 z-50 border-b border-white/60 bg-white/90 px-5 py-3.5 shadow-[0_10px_40px_rgba(3,24,39,0.06)] backdrop-blur-xl lg:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <Logo />
-          <nav className="hidden items-center gap-1 rounded-full border border-slate-200 bg-white p-1 lg:flex" aria-label="Primary navigation">
+          <nav className="hidden items-center gap-1 rounded-full border border-slate-200/80 bg-white p-1.5 shadow-sm lg:flex" aria-label="Primary navigation">
             {site.navigation.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-full px-5 py-2.5 text-sm font-bold transition ${
-                    active ? "bg-navy text-white" : "text-slate-700 hover:bg-harbor hover:text-navy"
+                  className={`rounded-full px-5 py-2.5 text-sm font-black transition duration-300 ${
+                    active ? "bg-navy text-white shadow-lg shadow-navy/20" : "text-slate-600 hover:bg-harbor hover:text-navy"
                   }`}
                 >
                   {item.label}
@@ -44,18 +44,18 @@ export function Header() {
               );
             })}
           </nav>
-          <div className="hidden items-center gap-3 lg:flex">
-            <a href="mailto:ops@jmtshipping.com" className="text-sm font-bold text-ocean hover:text-navy">
+          <div className="hidden items-center gap-4 lg:flex">
+            <a href="mailto:ops@jmtshipping.com" className="text-sm font-black text-ocean transition hover:text-navy">
               ops@jmtshipping.com
             </a>
-            <Link href={site.cta.href} className="rounded-full bg-safety px-5 py-3 text-sm font-black text-navy shadow-lg shadow-safety/25 transition hover:bg-gold">
+            <Link href={site.cta.href} className="btn-primary px-5 py-3 text-xs">
               {site.cta.label}
             </Link>
           </div>
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="rounded-2xl border border-slate-200 p-3 text-navy lg:hidden"
+            className="rounded-2xl border border-slate-200 bg-white p-3 text-navy shadow-sm transition hover:border-ocean/30 hover:bg-harbor lg:hidden"
             aria-label="Open navigation menu"
           >
             <span className="block h-0.5 w-6 bg-current" />
@@ -66,40 +66,45 @@ export function Header() {
       </header>
 
       {open && (
-        <div className="fixed inset-0 z-[60] bg-deep/60 backdrop-blur-sm lg:hidden" role="dialog" aria-modal="true">
-          <div className="ml-auto flex h-full w-full max-w-sm flex-col bg-white p-6 shadow-2xl">
+        <div className="fixed inset-0 z-[60] bg-deep/70 backdrop-blur-md lg:hidden" role="dialog" aria-modal="true">
+          <div className="ml-auto flex h-full w-full max-w-sm flex-col overflow-y-auto bg-white p-6 shadow-2xl">
             <div className="flex items-center justify-between">
               <Logo />
-              <button type="button" onClick={() => setOpen(false)} className="rounded-full bg-harbor px-4 py-2 text-2xl leading-none text-navy" aria-label="Close navigation menu">
+              <button type="button" onClick={() => setOpen(false)} className="rounded-full bg-harbor px-4 py-2 text-2xl leading-none text-navy transition hover:bg-safety/20" aria-label="Close navigation menu">
                 ×
               </button>
             </div>
             <nav className="mt-10 grid gap-3" aria-label="Mobile navigation">
-              {site.navigation.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-2xl border border-slate-200 px-5 py-4 text-lg font-bold text-navy hover:border-ocean hover:bg-harbor"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {site.navigation.map((item) => {
+                const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className={`rounded-2xl border px-5 py-4 text-lg font-black transition ${
+                      active ? "border-navy bg-navy text-white" : "border-slate-200 text-navy hover:border-ocean hover:bg-harbor"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
-            <div className="mt-auto rounded-3xl bg-navy p-5 text-white">
+            <div className="mt-8 rounded-[1.75rem] bg-gradient-to-br from-navy to-deep p-5 text-white shadow-premium">
               <p className="text-sm font-semibold text-white/70">24/7 operations support</p>
-              <a href="mailto:ops@jmtshipping.com" className="mt-2 block font-bold text-white">
+              <a href="mailto:ops@jmtshipping.com" className="mt-2 block font-bold text-white transition hover:text-safety">
                 ops@jmtshipping.com
               </a>
-              <Link onClick={() => setOpen(false)} href="/contact" className="mt-5 block rounded-full bg-safety px-5 py-3 text-center font-black text-navy">
-                Request Support
+              <Link onClick={() => setOpen(false)} href="/contact" className="mt-5 flex rounded-full bg-safety px-5 py-3 text-center font-black text-navy transition hover:bg-gold">
+                <span className="mx-auto">Request Support</span>
               </Link>
             </div>
           </div>
         </div>
       )}
 
-      <Link href="/contact" className="fixed bottom-4 left-4 right-4 z-40 rounded-full bg-safety px-5 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-navy shadow-2xl shadow-navy/25 lg:hidden">
+      <Link href="/contact" className="fixed bottom-4 left-4 right-4 z-40 rounded-full bg-safety px-5 py-4 text-center text-xs font-black uppercase tracking-[0.14em] text-navy shadow-2xl shadow-navy/25 transition hover:bg-gold lg:hidden">
         Request Agency Support
       </Link>
     </>
