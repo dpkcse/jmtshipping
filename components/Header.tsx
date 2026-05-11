@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
 
 function Logo() {
@@ -22,6 +22,30 @@ function Logo() {
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    closeButtonRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
 
   return (
     <>
@@ -57,6 +81,8 @@ export function Header() {
             onClick={() => setOpen(true)}
             className="rounded-2xl border border-slate-200 bg-white p-3 text-navy shadow-sm transition hover:border-ocean/30 hover:bg-harbor lg:hidden"
             aria-label="Open navigation menu"
+            aria-controls="mobile-navigation"
+            aria-expanded={open}
           >
             <span className="block h-0.5 w-6 bg-current" />
             <span className="mt-1.5 block h-0.5 w-6 bg-current" />
@@ -66,15 +92,16 @@ export function Header() {
       </header>
 
       {open && (
-        <div className="fixed inset-0 z-[60] bg-deep/70 backdrop-blur-md lg:hidden" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-[60] bg-deep/70 backdrop-blur-md lg:hidden" role="dialog" aria-modal="true" aria-labelledby="mobile-navigation-title">
           <div className="ml-auto flex h-full w-full max-w-sm flex-col overflow-y-auto bg-white p-6 shadow-2xl">
             <div className="flex items-center justify-between">
               <Logo />
-              <button type="button" onClick={() => setOpen(false)} className="rounded-full bg-harbor px-4 py-2 text-2xl leading-none text-navy transition hover:bg-safety/20" aria-label="Close navigation menu">
+              <h2 id="mobile-navigation-title" className="sr-only">Mobile navigation</h2>
+              <button ref={closeButtonRef} type="button" onClick={() => setOpen(false)} className="rounded-full bg-harbor px-4 py-2 text-2xl leading-none text-navy transition hover:bg-safety/20" aria-label="Close navigation menu">
                 ×
               </button>
             </div>
-            <nav className="mt-10 grid gap-3" aria-label="Mobile navigation">
+            <nav id="mobile-navigation" className="mt-10 grid gap-3" aria-label="Mobile navigation">
               {site.navigation.map((item) => {
                 const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
                 return (
