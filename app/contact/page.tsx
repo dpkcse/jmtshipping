@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-deep px-5 py-20 text-white lg:px-8">
+      <section className="bg-deep px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <p className="font-bold uppercase tracking-[0.22em] text-safety">Contact</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-safety sm:text-sm sm:tracking-[0.22em]">Contact</p>
           <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
             Request agency support or speak with JMT operations.
           </h1>
