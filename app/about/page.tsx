@@ -1,0 +1,93 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Section } from "@/components/Section";
+import { values } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "Learn about JMT Shipping & Trading Co. Ltd., a Bangladesh-based shipping agency and integrated maritime service provider with 12+ years of experience.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About JMT Shipping & Trading Co. Ltd.",
+    description: "Bangladesh-based maritime agency expertise, mission, values, and compliance-focused operating standards."
+  }
+};
+
+export default function AboutPage() {
+  return (
+    <>
+      <section className="bg-deep px-5 py-20 text-white lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <p className="font-bold uppercase tracking-[0.22em] text-safety">About us</p>
+          <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
+            A trusted Bangladesh maritime partner with 12+ years of agency and trade support experience.
+          </h1>
+          <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
+            JMT Shipping & Trading Co. Ltd. provides dependable shipping agency and integrated maritime services from Chattogram, serving owners, charterers, traders, managers, and offshore clients.
+          </p>
+        </div>
+      </section>
+
+      <Section eyebrow="Company introduction" title="Responsive local execution for global maritime clients.">
+        <div className="grid gap-8 lg:grid-cols-[1fr_.8fr]">
+          <div className="space-y-6 text-lg leading-8 text-slate-700">
+            <p>
+              Our team understands the operational urgency of vessel calls, cargo movements, documentation, crew requirements, survey attendance, and marine supply coordination. We focus on practical solutions, careful communication, and accountable service delivery.
+            </p>
+            <p>
+              With more than a decade of experience in Bangladesh seaport operations, JMT is positioned to coordinate the details that keep port calls moving: local liaison, vendor alignment, compliance awareness, and prompt reporting to principals.
+            </p>
+          </div>
+          <div className="rounded-[2rem] bg-harbor p-8">
+            <p className="text-7xl font-black text-navy">12+</p>
+            <p className="mt-3 text-xl font-bold text-navy">Years supporting maritime operations in Bangladesh.</p>
+          </div>
+        </div>
+      </Section>
+
+      <Section eyebrow="Vision and mission" title="Professional standards for every vessel, shipment, and stakeholder." className="bg-harbor/60">
+        <div className="grid gap-6 md:grid-cols-2">
+          <article className="rounded-3xl bg-white p-8 shadow-sm">
+            <h2 className="text-2xl font-bold text-navy">Vision</h2>
+            <p className="mt-4 leading-7 text-slate-700">
+              To be a preferred Bangladesh maritime agency partner recognized for dependable operations, ethical conduct, and integrated service capability.
+            </p>
+          </article>
+          <article className="rounded-3xl bg-white p-8 shadow-sm">
+            <h2 className="text-2xl font-bold text-navy">Mission</h2>
+            <p className="mt-4 leading-7 text-slate-700">
+              To simplify port and marine operations for clients through responsive coordination, transparent communication, and safety-conscious local execution.
+            </p>
+          </article>
+        </div>
+      </Section>
+
+      <Section eyebrow="Values" title="The principles guiding JMT operations.">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {values.map((value) => (
+            <div key={value} className="rounded-3xl border border-slate-200 bg-white p-6 font-bold text-navy shadow-sm">
+              <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-safety text-navy">✓</span>
+              {value}
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Industry credibility" title="Operational credibility comes from preparation, port knowledge, and careful reporting." className="bg-navy text-white">
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            "Agency coordination for vessel calls and owner requirements.",
+            "Local liaison support for marine logistics, crew, surveys, and supplies.",
+            "Compliance-aware execution with documentation and anti-bribery awareness."
+          ].map((item) => (
+            <p key={item} className="rounded-3xl border border-white/10 bg-white/10 p-7 text-lg font-semibold leading-8 text-white/80">{item}</p>
+          ))}
+        </div>
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <Link href="/services" className="rounded-full bg-safety px-7 py-4 text-center font-black text-navy">Learn About Our Services</Link>
+          <Link href="/contact" className="rounded-full border border-white/20 px-7 py-4 text-center font-black text-white">Contact JMT</Link>
+        </div>
+      </Section>
+    </>
+  );
+}
