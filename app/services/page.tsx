@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-deep px-5 py-20 text-white lg:px-8">
+      <section className="bg-deep px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <p className="font-bold uppercase tracking-[0.22em] text-safety">Services</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-safety sm:text-sm sm:tracking-[0.22em]">Services</p>
           <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
             Integrated port agency, logistics, survey, crew, supply, and trade support.
           </h1>
@@ -62,13 +62,13 @@ export default function ServicesPage() {
         </div>
       </Section>
 
-      <section className="bg-navy px-5 py-16 text-white lg:px-8">
+      <section className="bg-navy px-4 py-16 text-white sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="font-bold uppercase tracking-[0.22em] text-safety">Request service support</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-safety sm:text-sm sm:tracking-[0.22em]">Request service support</p>
             <h2 className="mt-3 text-3xl font-black">Send your operational requirement to JMT.</h2>
           </div>
-          <Link href="/contact" className="rounded-full bg-safety px-7 py-4 text-center font-black text-navy">Request Service Support</Link>
+          <Link href="/contact" className="rounded-full bg-safety px-7 py-4 text-center font-black text-navy transition hover:bg-gold">Request Service Support</Link>
         </div>
       </section>
     </>

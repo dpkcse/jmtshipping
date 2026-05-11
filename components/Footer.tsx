@@ -3,7 +3,7 @@ import { serviceGroups, site } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="bg-deep px-5 pb-24 pt-14 text-white lg:px-8 lg:pb-10">
+    <footer className="bg-deep px-4 pb-28 pt-14 text-white sm:px-5 lg:px-8 lg:pb-10">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.4fr_.8fr_.8fr_1fr]">
         <div>
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-safety font-black text-navy">JMT</div>
@@ -41,7 +41,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-3 border-t border-white/10 pt-6 text-xs leading-6 text-white/50 sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} JMT Shipping & Trading Co. Ltd. All rights reserved.</p>
         <p>Modern maritime support across Bangladesh seaports.</p>
       </div>

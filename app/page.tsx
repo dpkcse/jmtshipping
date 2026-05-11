@@ -6,12 +6,12 @@ import { site, trustHighlights, values } from "@/lib/site";
 export default function Home() {
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-deep px-5 py-20 text-white sm:py-28 lg:px-8">
+      <section className="relative isolate overflow-hidden bg-deep px-4 py-16 text-white sm:px-6 sm:py-24 lg:px-8">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(15,111,159,.65),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(245,158,11,.2),transparent_25%)]" />
         <div className="absolute inset-0 -z-10 bg-hero-grid bg-[length:48px_48px] opacity-25" />
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
           <div>
-            <p className="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-safety backdrop-blur">
+            <p className="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-safety backdrop-blur sm:tracking-[0.22em]">
               Bangladesh maritime agency • 24/7 operations
             </p>
             <h1 className="max-w-4xl text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
@@ -96,10 +96,10 @@ export default function Home() {
         </div>
       </Section>
 
-      <section className="bg-ocean px-5 py-16 text-white lg:px-8">
+      <section className="bg-ocean px-4 py-16 text-white sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 rounded-[2rem] bg-deep p-8 shadow-2xl sm:p-10 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="font-bold uppercase tracking-[0.22em] text-safety">Need immediate port support?</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-safety sm:text-sm sm:tracking-[0.22em]">Need immediate port support?</p>
             <h2 className="mt-3 text-3xl font-black">Talk to JMT operations today.</h2>
           </div>
           <Link href="/contact" className="rounded-full bg-safety px-7 py-4 text-center font-black text-navy hover:bg-gold">

@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-deep px-5 py-20 text-white lg:px-8">
+      <section className="bg-deep px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <p className="font-bold uppercase tracking-[0.22em] text-safety">About us</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-safety sm:text-sm sm:tracking-[0.22em]">About us</p>
           <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
             A trusted Bangladesh maritime partner with 12+ years of agency and trade support experience.
           </h1>
@@ -84,7 +84,7 @@ export default function AboutPage() {
           ))}
         </div>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Link href="/services" className="rounded-full bg-safety px-7 py-4 text-center font-black text-navy">Learn About Our Services</Link>
+          <Link href="/services" className="rounded-full bg-safety px-7 py-4 text-center font-black text-navy transition hover:bg-gold">Learn About Our Services</Link>
           <Link href="/contact" className="rounded-full border border-white/20 px-7 py-4 text-center font-black text-white">Contact JMT</Link>
         </div>
       </Section>
