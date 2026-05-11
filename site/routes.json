@@ -1,0 +1,169 @@
+{
+  "brand": "JMT Shipping & Trading Co. Ltd.",
+  "primaryNavigation": [
+    {
+      "label": "Home",
+      "path": "/",
+      "status": "launch"
+    },
+    {
+      "label": "About Us",
+      "path": "/about",
+      "status": "launch"
+    },
+    {
+      "label": "Services",
+      "path": "/services",
+      "status": "launch"
+    },
+    {
+      "label": "Contact",
+      "path": "/contact",
+      "status": "launch"
+    }
+  ],
+  "headerCta": {
+    "label": "Request Support",
+    "path": "/contact"
+  },
+  "routes": [
+    {
+      "label": "Home",
+      "path": "/",
+      "template": "home",
+      "status": "launch",
+      "nav": true,
+      "footer": true,
+      "parent": null
+    },
+    {
+      "label": "About Us",
+      "path": "/about",
+      "template": "about",
+      "status": "launch",
+      "nav": true,
+      "footer": true,
+      "parent": null
+    },
+    {
+      "label": "Services",
+      "path": "/services",
+      "template": "services-index",
+      "status": "launch",
+      "nav": true,
+      "footer": true,
+      "parent": null
+    },
+    {
+      "label": "Contact",
+      "path": "/contact",
+      "template": "contact",
+      "status": "launch",
+      "nav": true,
+      "footer": true,
+      "parent": null
+    },
+    {
+      "label": "Port Agency",
+      "path": "/services/port-agency",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    },
+    {
+      "label": "STS Service",
+      "path": "/services/sts-service",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    },
+    {
+      "label": "Vessel Husbandry",
+      "path": "/services/vessel-husbandry",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    },
+    {
+      "label": "Crew Change",
+      "path": "/services/crew-change",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    },
+    {
+      "label": "Fresh Water Supply",
+      "path": "/services/fresh-water-supply",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    },
+    {
+      "label": "Cargo Survey",
+      "path": "/services/cargo-survey",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    },
+    {
+      "label": "Bunker Survey",
+      "path": "/services/bunker-survey",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    },
+    {
+      "label": "Underwater Diving",
+      "path": "/services/underwater-diving",
+      "template": "service-detail",
+      "status": "future-seo",
+      "nav": false,
+      "footer": false,
+      "parent": "/services"
+    }
+  ],
+  "footerNavigation": {
+    "company": ["/", "/about", "/services", "/contact"],
+    "servicesLaunch": ["/services"],
+    "servicesFuture": [
+      "/services/port-agency",
+      "/services/sts-service",
+      "/services/vessel-husbandry",
+      "/services/crew-change",
+      "/services/fresh-water-supply",
+      "/services/cargo-survey",
+      "/services/bunker-survey",
+      "/services/underwater-diving"
+    ],
+    "contact": ["/contact"]
+  },
+  "mobileNavigation": {
+    "launchItems": ["/", "/about", "/services", "/contact"],
+    "cta": "/contact",
+    "futureServicesAccordion": [
+      "/services",
+      "/services/port-agency",
+      "/services/sts-service",
+      "/services/vessel-husbandry",
+      "/services/crew-change",
+      "/services/fresh-water-supply",
+      "/services/cargo-survey",
+      "/services/bunker-survey",
+      "/services/underwater-diving"
+    ]
+  }
+}
