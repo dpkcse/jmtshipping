@@ -16,8 +16,9 @@ html {
 
 body {
   margin: 0;
-  background: #ffffff;
+  background: #f7fbfd;
   color: #0f172a;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -25,18 +26,87 @@ body {
   color: #06243f;
 }
 
+@layer components {
+  .hero-shell {
+    @apply relative isolate overflow-hidden bg-deep px-5 py-20 text-white sm:py-24 lg:px-8 lg:py-28;
+  }
+
+  .hero-shell::before {
+    content: "";
+    @apply absolute inset-0 -z-20;
+    background:
+      radial-gradient(circle at 16% 18%, rgba(15, 111, 159, 0.72), transparent 29%),
+      radial-gradient(circle at 82% 8%, rgba(245, 158, 11, 0.24), transparent 24%),
+      linear-gradient(135deg, #031827 0%, #06243f 48%, #04111d 100%);
+  }
+
+  .hero-shell::after {
+    content: "";
+    @apply absolute inset-0 -z-10 opacity-40;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(115deg, transparent 0%, transparent 52%, rgba(255, 255, 255, 0.08) 52.2%, transparent 62%);
+    background-size: 56px 56px, 56px 56px, 100% 100%;
+    mask-image: linear-gradient(to bottom, black, transparent 88%);
+  }
+
+  .eyebrow-pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[0.68rem] font-black uppercase tracking-[0.24em] text-safety shadow-lg shadow-deep/10 backdrop-blur-md;
+  }
+
+  .section-eyebrow {
+    @apply mb-3 text-xs font-black uppercase tracking-[0.26em] text-ocean;
+  }
+
+  .premium-card {
+    @apply rounded-[1.75rem] border border-white/80 bg-white/90 shadow-[0_22px_70px_rgba(3,24,39,0.09)] backdrop-blur transition duration-300 ease-out;
+  }
+
+  .premium-card-hover {
+    @apply hover:-translate-y-1 hover:border-ocean/25 hover:shadow-premium;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-safety px-7 py-4 text-center text-sm font-black uppercase tracking-[0.08em] text-navy shadow-xl shadow-safety/25 transition duration-300 hover:-translate-y-0.5 hover:bg-gold hover:shadow-2xl hover:shadow-safety/25 focus:outline-none focus:ring-4 focus:ring-safety/30;
+  }
+
+  .btn-secondary-dark {
+    @apply inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-7 py-4 text-center text-sm font-black uppercase tracking-[0.08em] text-white backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-white/20;
+  }
+
+  .btn-secondary-light {
+    @apply inline-flex items-center justify-center rounded-full border border-navy/20 bg-white px-7 py-4 text-center text-sm font-black uppercase tracking-[0.08em] text-navy shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-ocean/30 hover:bg-harbor focus:outline-none focus:ring-4 focus:ring-ocean/20;
+  }
+}
+
 .input-field {
   width: 100%;
   border-radius: 1rem;
   border: 1px solid rgb(203 213 225);
-  background: white;
-  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.95rem 1rem;
   color: #0f172a;
   outline: none;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.input-field:hover {
+  border-color: rgba(15, 111, 159, 0.45);
 }
 
 .input-field:focus {
   border-color: #0f6f9f;
   box-shadow: 0 0 0 4px rgba(15, 111, 159, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
