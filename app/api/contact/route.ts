@@ -27,7 +27,8 @@ type SmtpConfig = {
   user: string;
   pass: string;
   from: string;
-  to: string;
+  to: string[];
+  heloHost: string;
 };
 
 type SmtpResponse = {
@@ -36,6 +37,22 @@ type SmtpResponse = {
 };
 
 const requiredFields: Array<keyof ValidContactPayload> = ["name", "company", "email", "phone", "service", "message"];
+const fieldLabels: Record<keyof ValidContactPayload, string> = {
+  name: "name",
+  company: "company",
+  email: "email address",
+  phone: "phone number",
+  service: "service",
+  message: "message"
+};
+const maxLengths: Record<keyof ValidContactPayload, number> = {
+  name: 120,
+  company: 160,
+  email: 254,
+  phone: 40,
+  service: 80,
+  message: 4000
+};
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const runtime = "nodejs";
@@ -44,7 +61,8 @@ export async function POST(request: Request) {
   let payload: ContactPayload;
 
   try {
-    payload = (await request.json()) as ContactPayload;
+    const body = await request.json();
+    payload = isRecord(body) ? body : {};
   } catch {
     return NextResponse.json({ message: "Invalid request payload." }, { status: 400 });
   }
@@ -87,7 +105,13 @@ function validatePayload(payload: ContactPayload): { ok: true; data: ValidContac
   const missingField = requiredFields.find((field) => data[field].length === 0);
 
   if (missingField) {
-    return { ok: false, message: `Please provide your ${missingField}.` };
+    return { ok: false, message: `Please provide your ${fieldLabels[missingField]}.` };
+  }
+
+  const tooLongField = requiredFields.find((field) => data[field].length > maxLengths[field]);
+
+  if (tooLongField) {
+    return { ok: false, message: `Please keep your ${fieldLabels[tooLongField]} under ${maxLengths[tooLongField]} characters.` };
   }
 
   if (!emailPattern.test(data.email)) {
@@ -98,14 +122,14 @@ function validatePayload(payload: ContactPayload): { ok: true; data: ValidContac
 }
 
 function getSmtpConfig(): SmtpConfig | null {
-  const host = process.env.SMTP_HOST ?? "jmtshipping.com";
-  const user = process.env.SMTP_USER ?? "no-reply@jmtshipping.com";
+  const host = process.env.SMTP_HOST?.trim();
+  const user = process.env.SMTP_USER?.trim();
   const pass = process.env.SMTP_PASS;
-  const from = process.env.CONTACT_EMAIL_FROM ?? `JMT Website <${user}>`;
-  const to = process.env.CONTACT_EMAIL_TO ?? "ops@jmtshipping.com";
-  const port = Number(process.env.SMTP_PORT ?? "465");
+  const from = process.env.CONTACT_EMAIL_FROM?.trim();
+  const to = splitRecipients(process.env.CONTACT_EMAIL_TO);
+  const port = Number(process.env.SMTP_PORT ?? "587");
 
-  if (!pass || Number.isNaN(port)) {
+  if (!host || !user || !pass || !from || to.length === 0 || !Number.isInteger(port) || port < 1 || port > 65535) {
     return null;
   }
 
@@ -116,7 +140,8 @@ function getSmtpConfig(): SmtpConfig | null {
     user,
     pass,
     from,
-    to
+    to,
+    heloHost: process.env.SMTP_HELO_HOST?.trim() || "jmtshipping.com"
   };
 }
 
@@ -180,7 +205,7 @@ function buildMessage({
   html
 }: {
   from: string;
-  to: string;
+  to: string[];
   replyTo: string;
   subject: string;
   text: string;
@@ -188,9 +213,9 @@ function buildMessage({
 }) {
   const boundary = `jmt-${Date.now().toString(36)}`;
   const headers = [
-    `From: ${from}`,
-    `To: ${to}`,
-    `Reply-To: ${replyTo}`,
+    `From: ${sanitizeHeaderValue(from)}`,
+    `To: ${to.map(sanitizeHeaderValue).join(", ")}`,
+    `Reply-To: ${sanitizeHeaderValue(replyTo)}`,
     `Subject: ${encodeHeader(subject)}`,
     "MIME-Version: 1.0",
     `Content-Type: multipart/alternative; boundary="${boundary}"`
@@ -215,7 +240,7 @@ function buildMessage({
 }
 
 function encodeHeader(value: string) {
-  return `=?UTF-8?B?${Buffer.from(value, "utf8").toString("base64")}?=`;
+  return `=?UTF-8?B?${Buffer.from(sanitizeHeaderValue(value), "utf8").toString("base64")}?=`;
 }
 
 function escapeHtml(value: string) {
@@ -225,6 +250,21 @@ function escapeHtml(value: string) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function isRecord(value: unknown): value is ContactPayload {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function splitRecipients(value: string | undefined) {
+  return (value ?? "")
+    .split(",")
+    .map((recipient) => recipient.trim())
+    .filter(Boolean);
+}
+
+function sanitizeHeaderValue(value: string) {
+  return value.replace(/[\r\n]+/g, " ").trim();
 }
 
 class SmtpClient {
@@ -239,22 +279,26 @@ class SmtpClient {
   async connect() {
     await this.openSocket();
     await this.expect([220]);
-    await this.command(`EHLO ${this.hostname()}`, [250]);
+    await this.command(`EHLO ${this.config.heloHost}`, [250]);
 
     if (!this.config.secure) {
       await this.command("STARTTLS", [220]);
       await this.upgradeToTls();
-      await this.command(`EHLO ${this.hostname()}`, [250]);
+      await this.command(`EHLO ${this.config.heloHost}`, [250]);
     }
 
     await this.command(`AUTH PLAIN ${Buffer.from(`\0${this.config.user}\0${this.config.pass}`).toString("base64")}`, [235]);
   }
 
-  async sendMail(from: string, to: string, message: string) {
+  async sendMail(from: string, to: string[], message: string) {
     await this.command(`MAIL FROM:<${extractEmailAddress(from)}>`, [250]);
-    await this.command(`RCPT TO:<${extractEmailAddress(to)}>`, [250, 251]);
+
+    for (const recipient of to) {
+      await this.command(`RCPT TO:<${extractEmailAddress(recipient)}>`, [250, 251]);
+    }
+
     await this.command("DATA", [354]);
-    await this.command(`${message.replace(/\r?\n\./g, "\r\n..")}\r\n.`, [250]);
+    await this.command(`${message.replace(/^\./gm, "..")}\r\n.`, [250]);
     await this.command("QUIT", [221]);
   }
 
@@ -357,13 +401,10 @@ class SmtpClient {
       }
     }
   }
-
-  private hostname() {
-    return process.env.SMTP_HELO_HOST ?? "jmtshipping.com";
-  }
 }
 
 function extractEmailAddress(value: string) {
-  const match = value.match(/<([^>]+)>/);
-  return match?.[1] ?? value;
+  const sanitizedValue = sanitizeHeaderValue(value);
+  const match = sanitizedValue.match(/<([^>]+)>/);
+  return match?.[1] ?? sanitizedValue;
 }
