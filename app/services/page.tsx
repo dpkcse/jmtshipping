@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import { ServiceCards } from "@/components/ServiceCards";
-import { pageSeo } from "@/lib/site";
+import { pageSeo, serviceDetails } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: pageSeo.services.title,
@@ -38,6 +38,25 @@ export default function ServicesPage() {
 
       <Section eyebrow="Service categories" title="Coverage for the full operational lifecycle of a port call.">
         <ServiceCards />
+      </Section>
+
+      <Section eyebrow="Individual services" title="SEO-focused service pages for specific maritime requirements." className="bg-white">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {serviceDetails.map((service) => (
+            <Link
+              key={service.slug}
+              href={`/services/${service.slug}`}
+              className="premium-card premium-card-hover group p-6"
+            >
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-ocean">{service.eyebrow}</p>
+              <h3 className="mt-4 text-xl font-black text-navy">{service.shortTitle}</h3>
+              <p className="mt-4 text-sm leading-7 text-slate-600">{service.description}</p>
+              <span className="mt-6 inline-flex text-sm font-black text-ocean transition group-hover:text-safety">
+                View details →
+              </span>
+            </Link>
+          ))}
+        </div>
       </Section>
 
       <Section eyebrow="How we work" title="A disciplined workflow from first request to final report." className="bg-harbor/60">
