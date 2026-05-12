@@ -9,6 +9,7 @@ This document finalizes the first-launch sitemap, route hierarchy, navigation mo
 - Keep first-launch navigation concise and confidence-building: Home, About Us, Services, Contact.
 - Use short, readable, lowercase URLs with hyphenated service slugs.
 - Treat `/services` as the parent overview page for all current and future service-detail pages.
+- This codebase uses the root-level `app/` directory for the Next.js App Router, not `src/app/`; service detail routing is implemented at `app/services/[slug]/page.tsx`.
 - Prepare future SEO service routes now so copy, metadata, internal links, redirects, and CMS entries can be added without changing the core URL strategy.
 - Keep every primary conversion path within one click of the main navigation or mobile menu.
 
@@ -21,9 +22,9 @@ This document finalizes the first-launch sitemap, route hierarchy, navigation mo
 | Services | `/services` | Live at first launch | Provide a consolidated overview of port agency, trading, vessel support, survey, and marine service capabilities. | Request Service Support |
 | Contact | `/contact` | Live at first launch | Capture inquiries, emergency support requests, and commercial contact details. | Send Inquiry |
 
-## Future SEO service routes
+## Live SEO service routes
 
-These URLs are reserved for future service-detail pages. They should remain out of the primary navigation until content is ready, but the parent `/services` page should be written so each service can later become a natural internal link.
+These URLs are implemented as published service-detail pages through the reusable App Router dynamic route at `app/services/[slug]/page.tsx`. They remain out of the primary navigation, but `/services`, the footer, and each detail page provide natural internal links.
 
 | Service page | Route | Recommended SEO intent | Parent |
 | --- | --- | --- | --- |
@@ -42,14 +43,14 @@ These URLs are reserved for future service-detail pages. They should remain out 
 /
 ├── /about
 ├── /services
-│   ├── /services/port-agency            [future SEO page]
-│   ├── /services/sts-service            [future SEO page]
-│   ├── /services/vessel-husbandry       [future SEO page]
-│   ├── /services/crew-change            [future SEO page]
-│   ├── /services/fresh-water-supply     [future SEO page]
-│   ├── /services/cargo-survey           [future SEO page]
-│   ├── /services/bunker-survey          [future SEO page]
-│   └── /services/underwater-diving      [future SEO page]
+│   ├── /services/port-agency            [live SEO page]
+│   ├── /services/sts-service            [live SEO page]
+│   ├── /services/vessel-husbandry       [live SEO page]
+│   ├── /services/crew-change            [live SEO page]
+│   ├── /services/fresh-water-supply     [live SEO page]
+│   ├── /services/cargo-survey           [live SEO page]
+│   ├── /services/bunker-survey          [live SEO page]
+│   └── /services/underwater-diving      [live SEO page]
 └── /contact
 ```
 
@@ -181,7 +182,7 @@ Recommended sections:
 Recommended sections:
 
 1. Services overview hero.
-2. Service categories/cards for all eight future service areas.
+2. Service categories/cards for all eight published service detail areas.
 3. Operational workflow: request, coordination, execution, reporting.
 4. Industries and vessel/client types served.
 5. CTA linking to `/contact`.
@@ -207,7 +208,7 @@ Every route should define:
 - Primary H1.
 - Breadcrumb structure.
 
-Future service-detail pages should include:
+Service-detail pages should include:
 
 - A unique service-focused H1.
 - Local and maritime service intent terms.
@@ -220,8 +221,7 @@ Future service-detail pages should include:
 ## Recommended route states
 
 - First-launch pages should return `200` and be included in public navigation.
-- Future SEO service routes should be reserved in the route manifest and either:
-  - remain unpublished until content is ready, or
-  - return a planned placeholder only in non-production environments.
+- SEO service routes should be backed by the active App Router path and return `200` for published slugs.
+- Keep the service-detail route in `app/services/[slug]/page.tsx` unless the whole project is intentionally migrated to `src/app/`.
 - Do not publish thin or duplicate service pages just to occupy SEO routes.
-- When future service pages are published, add them to the XML sitemap and footer Services column.
+- Published service pages must be included in the XML sitemap and footer Services column.

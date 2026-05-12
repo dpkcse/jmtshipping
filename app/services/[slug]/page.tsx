@@ -150,6 +150,33 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
         </div>
       </Section>
 
+      <Section eyebrow="Explore services" title="Review related JMT service capabilities." className="bg-harbor/60">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {serviceDetails.map((relatedService) => {
+            const isCurrentService = relatedService.slug === service.slug;
+
+            return (
+              <Link
+                key={relatedService.slug}
+                href={`/services/${relatedService.slug}`}
+                aria-current={isCurrentService ? "page" : undefined}
+                className={`premium-card premium-card-hover group p-5 ${isCurrentService ? "border-ocean/40 bg-ocean/5" : ""}`}
+              >
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-ocean">{relatedService.eyebrow}</p>
+                <h3 className="mt-3 text-lg font-black text-navy">{relatedService.shortTitle}</h3>
+                <span className="mt-4 inline-flex text-sm font-black text-ocean transition group-hover:text-safety">
+                  {isCurrentService ? "Current service" : "View details →"}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+          <Link href="/services" className="btn-secondary-light">Back to All Services</Link>
+          <Link href="/contact" className="btn-secondary-light">Contact Operations</Link>
+        </div>
+      </Section>
+
       <section className="relative overflow-hidden bg-navy px-5 py-16 text-white lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
