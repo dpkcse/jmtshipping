@@ -60,7 +60,7 @@ export async function POST(request: Request) {
   if (!config) {
     console.error("Contact form email configuration is incomplete.");
     return NextResponse.json(
-      { message: "Email service is not configured. Please contact JMT operations directly." },
+      { message: "Email password is not configured. Please contact JMT operations directly." },
       { status: 500 }
     );
   }
@@ -98,21 +98,21 @@ function validatePayload(payload: ContactPayload): { ok: true; data: ValidContac
 }
 
 function getSmtpConfig(): SmtpConfig | null {
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
+  const host = process.env.SMTP_HOST ?? "jmtshipping.com";
+  const user = process.env.SMTP_USER ?? "no-reply@jmtshipping.com";
   const pass = process.env.SMTP_PASS;
-  const from = process.env.CONTACT_EMAIL_FROM;
-  const to = process.env.CONTACT_EMAIL_TO;
-  const port = Number(process.env.SMTP_PORT ?? "587");
+  const from = process.env.CONTACT_EMAIL_FROM ?? `JMT Website <${user}>`;
+  const to = process.env.CONTACT_EMAIL_TO ?? "ops@jmtshipping.com";
+  const port = Number(process.env.SMTP_PORT ?? "465");
 
-  if (!host || !user || !pass || !from || !to || Number.isNaN(port)) {
+  if (!pass || Number.isNaN(port)) {
     return null;
   }
 
   return {
     host,
     port,
-    secure: process.env.SMTP_SECURE === "true" || port === 465,
+    secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === "true" : port === 465,
     user,
     pass,
     from,
