@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { site } from "@/lib/site";
 
 type FormStatus = {
   type: "success" | "error";
@@ -64,35 +65,28 @@ export function ContactForm() {
       return;
     }
 
-    setStatus(null);
+    const subject = `JMT inquiry: ${formData.service}`;
+    const body = [
+      "New inquiry submitted from the JMT website:",
+      "",
+      `Name: ${formData.name.trim()}`,
+      `Company: ${formData.company.trim()}`,
+      `Email: ${formData.email.trim()}`,
+      `Phone: ${formData.phone.trim()}`,
+      `Service: ${formData.service.trim()}`,
+      "",
+      "Message:",
+      formData.message.trim()
+    ].join("\n");
+    const mailtoHref = `mailto:${site.emails[1]}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    setStatus({
+      type: "success",
+      message: "Your email app is opening with this inquiry. Please review and send the message to JMT operations."
+    });
     setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
-
-      const result = (await response.json()) as { message?: string };
-
-      if (!response.ok) {
-        throw new Error(result.message ?? "Unable to send your inquiry. Please try again.");
-      }
-
-      setFormData(initialFormState);
-      setStatus({
-        type: "success",
-        message: result.message ?? "Thank you. Your inquiry has been sent to JMT operations."
-      });
-    } catch (error) {
-      setStatus({
-        type: "error",
-        message: error instanceof Error ? error.message : "Unable to send your inquiry. Please try again."
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    window.location.href = mailtoHref;
+    window.setTimeout(() => setIsSubmitting(false), 1200);
   };
 
   return (
@@ -212,14 +206,14 @@ export function ContactForm() {
         {isSubmitting ? (
           <>
             <span className="h-4 w-4 animate-spin rounded-full border-2 border-navy/30 border-t-navy" aria-hidden="true" />
-            Sending securely...
+            Opening email app...
           </>
         ) : (
           "Send Inquiry"
         )}
       </button>
       <p className="mt-4 rounded-2xl bg-harbor/60 px-4 py-3 text-xs font-semibold leading-6 text-slate-600">
-        Your inquiry is sent securely to JMT operations. For urgent matters, email ops@jmtshipping.com directly.
+        This static website opens your email app with the inquiry details. For urgent matters, email ops@jmtshipping.com directly.
       </p>
     </form>
   );
