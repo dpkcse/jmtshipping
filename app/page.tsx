@@ -1,7 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import { ServiceCards } from "@/components/ServiceCards";
-import { site, trustHighlights, values } from "@/lib/site";
+import { pageSeo, site, trustHighlights, values } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: pageSeo.home.title,
+  description: pageSeo.home.description,
+  alternates: { canonical: pageSeo.home.path },
+  openGraph: {
+    type: "website",
+    url: pageSeo.home.path,
+    title: pageSeo.home.title,
+    description: pageSeo.home.description
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageSeo.home.title,
+    description: pageSeo.home.description
+  }
+};
 
 export default function Home() {
   return (

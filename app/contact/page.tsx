@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
 import { Section } from "@/components/Section";
-import { site } from "@/lib/site";
+import { pageSeo, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Contact JMT Shipping & Trading Co. Ltd. for Bangladesh port agency, maritime logistics, survey, crew, marine supply, and emergency operations support.",
-  alternates: { canonical: "/contact" },
+  title: pageSeo.contact.title,
+  description: pageSeo.contact.description,
+  alternates: { canonical: pageSeo.contact.path },
   openGraph: {
-    title: "Contact JMT Shipping & Trading Co. Ltd.",
-    description: "Request agency support or contact JMT's Bangladesh maritime operations team."
+    type: "website",
+    url: pageSeo.contact.path,
+    title: pageSeo.contact.title,
+    description: pageSeo.contact.description
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageSeo.contact.title,
+    description: pageSeo.contact.description
   }
 };
 
@@ -69,7 +76,7 @@ export default function ContactPage() {
         <div className="flex min-h-[320px] items-center justify-center rounded-[2rem] border border-dashed border-ocean/30 bg-gradient-to-br from-harbor via-white to-white p-8 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.8)]">
           <div>
             <p className="text-5xl">🗺️</p>
-            <h2 className="mt-4 text-2xl font-black text-navy">Google map placeholder</h2>
+            <h3 className="mt-4 text-2xl font-black text-navy">Google map placeholder</h3>
             <p className="mt-3 max-w-2xl text-slate-600">
               Embed a Google Map for Nazir Mansion, 1 No. CCT Gate, Bandar, South Halishahar - 4225, Chattogram, Bangladesh during deployment.
             </p>
