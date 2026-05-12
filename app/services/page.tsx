@@ -2,14 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import { ServiceCards } from "@/components/ServiceCards";
+import { pageSeo } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Explore JMT Shipping & Trading Co. Ltd. port agency, logistics, STS, crew, survey, marine supply, environmental, oil and gas, and trade support services in Bangladesh.",
-  alternates: { canonical: "/services" },
+  title: pageSeo.services.title,
+  description: pageSeo.services.description,
+  alternates: { canonical: pageSeo.services.path },
   openGraph: {
-    title: "Maritime Services in Bangladesh",
-    description: "Port agency, vessel support, STS logistics, crew documentation, survey, marine supply, and trade support services."
+    type: "website",
+    url: pageSeo.services.path,
+    title: pageSeo.services.title,
+    description: pageSeo.services.description
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageSeo.services.title,
+    description: pageSeo.services.description
   }
 };
 
@@ -42,7 +50,7 @@ export default function ServicesPage() {
           ].map(([number, title, copy]) => (
             <article key={number} className="premium-card premium-card-hover p-7">
               <p className="text-sm font-black text-safety">{number}</p>
-              <h2 className="mt-3 text-xl font-bold text-navy">{title}</h2>
+              <h3 className="mt-3 text-xl font-bold text-navy">{title}</h3>
               <p className="mt-4 text-sm leading-7 text-slate-600">{copy}</p>
             </article>
           ))}

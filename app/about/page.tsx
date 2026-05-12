@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/Section";
-import { values } from "@/lib/site";
+import { pageSeo, values } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About Us",
-  description: "Learn about JMT Shipping & Trading Co. Ltd., a Bangladesh-based shipping agency and integrated maritime service provider with 12+ years of experience.",
-  alternates: { canonical: "/about" },
+  title: pageSeo.about.title,
+  description: pageSeo.about.description,
+  alternates: { canonical: pageSeo.about.path },
   openGraph: {
-    title: "About JMT Shipping & Trading Co. Ltd.",
-    description: "Bangladesh-based maritime agency expertise, mission, values, and compliance-focused operating standards."
+    type: "website",
+    url: pageSeo.about.path,
+    title: pageSeo.about.title,
+    description: pageSeo.about.description
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageSeo.about.title,
+    description: pageSeo.about.description
   }
 };
 
@@ -48,13 +55,13 @@ export default function AboutPage() {
       <Section eyebrow="Vision and mission" title="Professional standards for every vessel, shipment, and stakeholder." className="bg-harbor/60">
         <div className="grid gap-6 md:grid-cols-2">
           <article className="premium-card premium-card-hover p-8">
-            <h2 className="text-2xl font-bold text-navy">Vision</h2>
+            <h3 className="text-2xl font-bold text-navy">Vision</h3>
             <p className="mt-4 leading-7 text-slate-700">
               To be a preferred Bangladesh maritime agency partner recognized for dependable operations, ethical conduct, and integrated service capability.
             </p>
           </article>
           <article className="premium-card premium-card-hover p-8">
-            <h2 className="text-2xl font-bold text-navy">Mission</h2>
+            <h3 className="text-2xl font-bold text-navy">Mission</h3>
             <p className="mt-4 leading-7 text-slate-700">
               To simplify port and marine operations for clients through responsive coordination, transparent communication, and safety-conscious local execution.
             </p>
