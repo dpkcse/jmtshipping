@@ -78,7 +78,7 @@ export async function POST(request: Request) {
   if (!config) {
     console.error("Contact form email configuration is incomplete.");
     return NextResponse.json(
-      { message: "Email service is not configured. Please contact JMT operations directly." },
+      { message: "Email password is not configured. Please contact JMT operations directly." },
       { status: 500 }
     );
   }
@@ -136,7 +136,7 @@ function getSmtpConfig(): SmtpConfig | null {
   return {
     host,
     port,
-    secure: process.env.SMTP_SECURE === "true" || port === 465,
+    secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === "true" : port === 465,
     user,
     pass,
     from,
