@@ -101,6 +101,12 @@ body {
   box-shadow: 0 0 0 4px rgba(15, 111, 159, 0.12);
 }
 
+.input-field:disabled {
+  cursor: not-allowed;
+  background: rgba(241, 245, 249, 0.88);
+  color: #64748b;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
