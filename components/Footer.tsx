@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { serviceGroups, site } from "@/lib/site";
+import { serviceDetails, site } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -26,8 +26,10 @@ export function Footer() {
         <div>
           <h3 className="font-black text-white">Services</h3>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
-            {serviceGroups.slice(0, 6).map((service) => (
-              <li key={service.title}>{service.title}</li>
+            {serviceDetails.map((service) => (
+              <li key={service.slug}>
+                <Link className="transition hover:text-safety" href={`/services/${service.slug}`}>{service.shortTitle}</Link>
+              </li>
             ))}
           </ul>
         </div>

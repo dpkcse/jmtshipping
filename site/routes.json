@@ -67,7 +67,7 @@
       "label": "Port Agency",
       "path": "/services/port-agency",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -76,7 +76,7 @@
       "label": "STS Service",
       "path": "/services/sts-service",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -85,7 +85,7 @@
       "label": "Vessel Husbandry",
       "path": "/services/vessel-husbandry",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -94,7 +94,7 @@
       "label": "Crew Change",
       "path": "/services/crew-change",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -103,7 +103,7 @@
       "label": "Fresh Water Supply",
       "path": "/services/fresh-water-supply",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -112,7 +112,7 @@
       "label": "Cargo Survey",
       "path": "/services/cargo-survey",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -121,7 +121,7 @@
       "label": "Bunker Survey",
       "path": "/services/bunker-survey",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -130,7 +130,7 @@
       "label": "Underwater Diving",
       "path": "/services/underwater-diving",
       "template": "service-detail",
-      "status": "future-seo",
+      "status": "launch",
       "nav": false,
       "footer": false,
       "parent": "/services"
@@ -139,7 +139,7 @@
   "footerNavigation": {
     "company": ["/", "/about", "/services", "/contact"],
     "servicesLaunch": ["/services"],
-    "servicesFuture": [
+    "servicesDetail": [
       "/services/port-agency",
       "/services/sts-service",
       "/services/vessel-husbandry",
